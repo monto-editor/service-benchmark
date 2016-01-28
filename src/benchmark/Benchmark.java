@@ -29,7 +29,7 @@ public class Benchmark {
 		////////////////
 		// Basic Config
 		long waitTime = 3000;
-		int numberOfRepetitions = 10;
+		int numberOfRepetitions = 100;
 		boolean doesPrint = false;
 		////////////////		
 		
