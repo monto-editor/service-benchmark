@@ -1,16 +1,14 @@
-Python Service for the Monto broker
+Benchmark for the Monto broker
 =================================
 
-Running the service
+Prerequisites
 -------------------
+Monto-broker has to be running.
 
-Start services with with `./start.sh`
-
-Options
+Config
 -------
-* -t run the tokenizer
-* -p run the parser
-* -o run the outliner
-* -c run the code completioner
-* -address run services on given address, for example `tcp://*`
-* -registration register on given address, for example `tcp://*:5004`
+Adjust the config.xml according to your desired settings.
+
+Running
+-------
+Execute Benchmark.main() in your IDE.

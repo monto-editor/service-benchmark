@@ -6,6 +6,66 @@
   <doesPrint>false</doesPrint>
   <services>
     <service>
+      <name>python</name>
+      <path>/home/stefan/workspace/benchmark/services/services-python.jar</path>
+      <messages>
+        <message>
+          <name>10lines</name>
+          <path>/home/stefan/workspace/benchmark/testVersionMessages/python-10lines.py</path>
+          <selection>
+            <startOffset>2</startOffset>
+            <length>1</length>
+          </selection>
+        </message>
+        <message>
+          <name>100lines</name>
+          <path>/home/stefan/workspace/benchmark/testVersionMessages/python-100lines.py</path>
+          <selection>
+            <startOffset>139</startOffset>
+            <length>0</length>
+          </selection>
+        </message>
+        <message>
+          <name>1000lines</name>
+          <path>/home/stefan/workspace/benchmark/testVersionMessages/python-1000lines.py</path>
+          <selection>
+            <startOffset>929</startOffset>
+            <length>0</length>
+          </selection>
+        </message>
+      </messages>
+    </service>
+    <service>
+      <name>java</name>
+      <path>/home/stefan/workspace/benchmark/services/services-java.jar</path>
+      <messages>
+        <message>
+          <name>10lines</name>
+          <path>/home/stefan/workspace/benchmark/testVersionMessages/java-10lines.java</path>
+          <selection>
+            <startOffset>2</startOffset>
+            <length>1</length>
+          </selection>
+        </message>
+        <message>
+          <name>100lines</name>
+          <path>/home/stefan/workspace/benchmark/testVersionMessages/java-100lines.java</path>
+          <selection>
+            <startOffset>3110</startOffset>
+            <length>0</length>
+          </selection>
+        </message>
+        <message>
+          <name>1000lines</name>
+          <path>/home/stefan/workspace/benchmark/testVersionMessages/java-1000lines.java</path>
+          <selection>
+            <startOffset>7216</startOffset>
+            <length>0</length>
+          </selection>
+        </message>
+      </messages>
+    </service>
+    <service>
       <name>javascript</name>
       <path>/home/stefan/workspace/benchmark/services/services-javascript.jar</path>
       <messages>
@@ -13,7 +73,7 @@
           <name>10lines</name>
           <path>/home/stefan/workspace/benchmark/testVersionMessages/javascript-10lines.js</path>
           <selection>
-            <startOffset>89</startOffset>
+            <startOffset>269</startOffset>
             <length>0</length>
           </selection>
         </message>
@@ -21,7 +81,7 @@
           <name>100lines</name>
           <path>/home/stefan/workspace/benchmark/testVersionMessages/javascript-100lines.js</path>
           <selection>
-            <startOffset>4372</startOffset>
+            <startOffset>3379</startOffset>
             <length>0</length>
           </selection>
         </message>
@@ -29,7 +89,7 @@
           <name>1000lines</name>
           <path>/home/stefan/workspace/benchmark/testVersionMessages/javascript-1000lines.js</path>
           <selection>
-            <startOffset>1145</startOffset>
+            <startOffset>7145</startOffset>
             <length>0</length>
           </selection>
         </message>
