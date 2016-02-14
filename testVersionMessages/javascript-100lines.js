@@ -70,6 +70,7 @@ window['PR']
   var PR_SOURCE = 'src';
   var PR_ATTRIB_NAME = 'atn';
   var PR_ATTRIB_VALUE = 'atv';
+  PR
 
   /**
    * A class that indicates a section of markup that is not code, e.g. to allow

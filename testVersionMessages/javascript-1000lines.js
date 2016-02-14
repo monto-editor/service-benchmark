@@ -156,7 +156,7 @@ window['PR']
   var PR_ATTRIB_NAME = 'atn';
   /** token style for an sgml attribute value. */
   var PR_ATTRIB_VALUE = 'atv';
-
+PR
   /**
    * A class that indicates a section of markup that is not code, e.g. to allow
    * embedding of line numbers within code listings.

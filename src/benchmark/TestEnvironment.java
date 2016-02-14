@@ -6,9 +6,11 @@ import java.util.List;
 
 import org.zeromq.ZMQ.Socket;
 
+import benchmark.util.BenchmarkUtils;
 import benchmark.util.CsvFileWriter;
+import monto.service.message.IAbstractProductMessage;
 import monto.service.message.ParseException;
-import monto.service.message.ProductMessage;
+import monto.service.message.ProductMessageWithContents;
 import monto.service.message.ProductMessages;
 import monto.service.message.VersionMessage;
 
@@ -94,8 +96,11 @@ public class TestEnvironment {
 			String prdMessageAsJSON = prdMessages.get(i);
 			long serviceReceivedTime = serviceDelays.get(i);
 			
-			ProductMessage prdMsg = null;
+			IAbstractProductMessage prdMsg = null;
 			try {
+				if(prdMessageAsJSON == null){
+					continue;
+				}
 				prdMsg = ProductMessages.decode(prdMessageAsJSON);
 			} catch (ParseException e) {
 				continue;
@@ -116,7 +121,33 @@ public class TestEnvironment {
 				outPutRow.setOutlinerDelay(delay);
 			}
 			if(serviceIdName.equals(serviceNames.getCodeCompletionerName())){
-				outPutRow.setCodeCompletionDelay(delay);
+				outPutRow.setCodeCompletionerDelay(delay);
+			}
+		}
+		
+		//check if all Services, that should have been set, actually have been set
+		//if not -> the socket received a timeout
+		List<String> enabledServices = recording.getActiveServices();
+		for(String service : enabledServices){
+			if(service == serviceNames.getTokenizerName()){
+				if(outPutRow.getTokenizerDelay() == null){
+					outPutRow.setTokenizerDelay(BenchmarkUtils.TIMEDOUT_RECEIVE);
+				}
+			}
+			if(service == serviceNames.getParserName()){
+				if(outPutRow.getParserDelay() == null){
+					outPutRow.setParserDelay(BenchmarkUtils.TIMEDOUT_RECEIVE);
+				}
+			}
+			if(service == serviceNames.getOutlinerName()){
+				if(outPutRow.getOutlinerDelay() == null){
+					outPutRow.setOutlinerDelay(BenchmarkUtils.TIMEDOUT_RECEIVE);
+				}
+			}
+			if(service == serviceNames.getCodeCompletionerName()){
+				if(outPutRow.getCodeCompletionerDelay() == null){
+					outPutRow.setCodeCompletionerDelay(BenchmarkUtils.TIMEDOUT_RECEIVE);
+				}
 			}
 		}
 		

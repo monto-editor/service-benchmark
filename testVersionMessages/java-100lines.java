@@ -71,6 +71,7 @@ public class Activator extends AbstractUIPlugin {
 		profiler.close();
 		plugin = null;
 		super.stop(bundle);
+        s
 	}
 	public static Activator getDefault() {
 		return plugin;

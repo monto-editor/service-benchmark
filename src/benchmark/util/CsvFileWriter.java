@@ -19,13 +19,8 @@ public class CsvFileWriter {
         try {
             fileWriter = new FileWriter(fileName);
  
-            //Write the CSV file header
-//            fileWriter.append(FILE_HEADER.toString());
             fileWriter.append(fileHeader);
-             
-            //Add a new line separator after the header
             fileWriter.append(NEW_LINE_SEPARATOR);
-            //Write a new student object list to the CSV file
             int i = 0;
             
             
@@ -39,14 +34,14 @@ public class CsvFileWriter {
                 appendIfNotNull(outputRow.getTokenizerDelay(), fileWriter);
                 appendIfNotNull(outputRow.getParserDelay(), fileWriter);
                 appendIfNotNull(outputRow.getOutlinerDelay(), fileWriter);
-                appendIfNotNull(outputRow.getCodeCompletionDelay(), fileWriter);
+                appendIfNotNull(outputRow.getCodeCompletionerDelay(), fileWriter, true);
                 fileWriter.append(NEW_LINE_SEPARATOR);
                 i++;
             }
  
-            System.out.println("CSV file was created successfully !!!");
+            System.out.println("CSV file was created successfully!");
         } catch (Exception e) {
-            System.out.println("Error in CsvFileWriter !!!");
+            System.out.println("Error in CsvFileWriter!");
             e.printStackTrace();
         } finally {
              
@@ -54,29 +49,49 @@ public class CsvFileWriter {
                 fileWriter.flush();
                 fileWriter.close();
             } catch (IOException e) {
-                System.out.println("Error while flushing/closing fileWriter !!!");
+                System.out.println("Error while flushing/closing fileWriter!");
                 e.printStackTrace();
             }
              
         }
     }
     
-    private static void appendIfNotNull(Object delay, FileWriter fileWriter){
-    	if (delay != null){
-        	try {
-				fileWriter.append(String.valueOf(delay));
-				fileWriter.append(COMMA_DELIMITER);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-        } else {
-        	try {
-				fileWriter.append(EMPTY_FIELD);
-				fileWriter.append(COMMA_DELIMITER);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-        }
+    private static void appendIfNotNull(Object toWrite, FileWriter fileWriter){
+    	appendIfNotNull(toWrite, fileWriter, false);
+    }
+    
+    private static void appendIfNotNull(Object toWrite, FileWriter fileWriter, boolean isLastElement){
+    	if (toWrite != null){
+    		try {
+    			Object checkedToWrite = handleTimedOut(toWrite);
+    			fileWriter.append(String.valueOf(checkedToWrite));
+    			if (!isLastElement)
+    				fileWriter.append(COMMA_DELIMITER);
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+    	} else {
+    		try {
+    			fileWriter.append(EMPTY_FIELD);
+    			if (!isLastElement)
+    				fileWriter.append(COMMA_DELIMITER);
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+    	}
+    }
+    
+    private static Object handleTimedOut(Object toWrite){
+    	Object result = toWrite;
+    	try {
+    		Long value = (Long) toWrite;
+    		if (value.equals(BenchmarkUtils.TIMEDOUT_RECEIVE)){
+    			result = BenchmarkUtils.TIMEDOUT_VALUE_IN_CSV;
+    		}
+    	} catch (ClassCastException e){
+    		//ignore;
+    	}
+    	return result;
     }
 
 }

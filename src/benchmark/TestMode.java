@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.zeromq.ZMQ.Socket;
 
+import benchmark.util.BenchmarkUtils;
 import benchmark.util.Waiter;
 import monto.service.message.VersionMessage;
 
@@ -19,7 +20,7 @@ public class TestMode {
 	private long waitTime;
 	private String acronym;
 	
-	public static final long WAIT_TIME_BETWEEN_MODES = 5000L; 
+
 	
 	public TestMode(List<VersionMessage> testMessages, List<String> servicesToBeEnabled,
 			Socket publisherSocket, Socket subscriberSocket, Services services, int numberOfRepetitions, long waitTime, String acronym) {
@@ -44,7 +45,7 @@ public class TestMode {
 		
 		List<TestCaseResult> result = new ArrayList<>();
 		for (VersionMessage testMessage : testMessages){
-			TestCase test = new TestCase(publisherSocket, subscriberSocket, testMessage, numberOfActiveServices, waitTime);
+			TestCase test = new TestCase(publisherSocket, subscriberSocket, testMessage, servicesToBeEnabled, waitTime);
 			List<RecordedTimes> recordedTimes = test.performTests(numberOfRepetitions);
 			
 			TestCaseResult testCaseResult = new TestCaseResult(testMessage.getSource().toString(), recordedTimes);
@@ -53,7 +54,7 @@ public class TestMode {
 //			Printer.printResult(recordedTimes, BenchmarkUtil.generateOutputName(services.getClass().getName(), startArguments, testMessage.getSource().toString(), numberOfRepetitions));
 		}
 		
-		Waiter.waitFor(WAIT_TIME_BETWEEN_MODES);
+		Waiter.waitFor(BenchmarkUtils.WAIT_TIME_BETWEEN_MODES);
 		
 		shutdownServices();
 		
@@ -63,12 +64,12 @@ public class TestMode {
 	
 	private void setupServices(String variableArguments){
 		services.start(variableArguments);
-		Waiter.waitFor(WAIT_TIME_BETWEEN_MODES);
+		Waiter.waitFor(BenchmarkUtils.WAIT_TIME_BETWEEN_MODES);
 	}
 
 	private void shutdownServices(){
 		services.stop();
-		Waiter.waitFor(WAIT_TIME_BETWEEN_MODES);
+		Waiter.waitFor(BenchmarkUtils.WAIT_TIME_BETWEEN_MODES);
 	}
 	
 	public String getAcronym(){

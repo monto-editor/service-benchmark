@@ -13,7 +13,7 @@ import benchmark.util.Waiter;
 import monto.service.message.Languages;
 import monto.service.message.LongKey;
 import monto.service.message.ParseException;
-import monto.service.message.ProductMessage;
+import monto.service.message.ProductMessageWithContents;
 import monto.service.message.ProductMessages;
 import monto.service.message.Selection;
 import monto.service.message.Source;
@@ -26,40 +26,39 @@ public class TestCase {
 	private Socket publisherSocket;
 	private Socket subscriberSocket;
 	private VersionMessage testMessage;
-	private int numberOfActiveServices;
+	private List<String> activeServices;
 	private long waitTime;
 	
-	public TestCase(Socket publisherSocket, Socket subscriberSocket, VersionMessage testMessage, int numberOfActiveServices, long waitTime){
+	public TestCase(Socket publisherSocket, Socket subscriberSocket, VersionMessage testMessage, List<String> activeServices, long waitTime){
 		
 		this.publisherSocket = publisherSocket;
 		this.subscriberSocket = subscriberSocket;
 		this.testMessage = testMessage;
-		this.numberOfActiveServices = numberOfActiveServices;
+		this.activeServices = activeServices;
 		this.waitTime = waitTime;
 		
 	}
 	
 	public RecordedTimes performTest(String testMsgAsJSON){
+		int numberOfActiveServices = activeServices.size();
 		ArrayList<String> prdMessagesOfService = new ArrayList<String>(numberOfActiveServices);
 		ArrayList<Long> delaysOfServices = new ArrayList<Long>(numberOfActiveServices);
 		
 		long timeSend = System.currentTimeMillis();
 		publisherSocket.send(testMsgAsJSON);
 		
-//		Waiter.waitFor(waitTime);
 		
 		for (int i = 0; i<numberOfActiveServices; i++){
 			//first message is the header
 			subscriberSocket.recvStr();
-//			Waiter.waitFor(waitTime);
 			String productMsgAsJson = subscriberSocket.recvStr();
-			long now = System.currentTimeMillis();
-			long timeWhenReceived = now;// - (2*waitTime);
+			
+			long timeWhenReceived = System.currentTimeMillis();
 			prdMessagesOfService.add(productMsgAsJson);
 			delaysOfServices.add(timeWhenReceived);
 		}
 		
-		RecordedTimes testRecord = new RecordedTimes(timeSend, prdMessagesOfService, delaysOfServices);
+		RecordedTimes testRecord = new RecordedTimes(timeSend, prdMessagesOfService, delaysOfServices, activeServices);
 		
 		Waiter.waitFor(waitTime);
 		

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<benchmark>
+  <timeout>5000</timeout>
+  <repetitions>2</repetitions>
+  <waitTime>2000</waitTime>
+  <doesPrint>false</doesPrint>
+  <services>
+    <service>
+      <name>javascript</name>
+      <path>/home/stefan/workspace/benchmark/services/services-javascript.jar</path>
+      <messages>
+        <message>
+          <name>10lines</name>
+          <path>/home/stefan/workspace/benchmark/testVersionMessages/javascript-10lines.js</path>
+          <selection>
+            <startOffset>89</startOffset>
+            <length>0</length>
+          </selection>
+        </message>
+        <message>
+          <name>100lines</name>
+          <path>/home/stefan/workspace/benchmark/testVersionMessages/javascript-100lines.js</path>
+          <selection>
+            <startOffset>4372</startOffset>
+            <length>0</length>
+          </selection>
+        </message>
+        <message>
+          <name>1000lines</name>
+          <path>/home/stefan/workspace/benchmark/testVersionMessages/javascript-1000lines.js</path>
+          <selection>
+            <startOffset>1145</startOffset>
+            <length>0</length>
+          </selection>
+        </message>
+      </messages>
+    </service>
+  </services>
+</benchmark>

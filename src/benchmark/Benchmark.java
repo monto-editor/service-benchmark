@@ -1,16 +1,28 @@
 package benchmark;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
+import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.configuration2.plist.ParseException;
+import org.apache.commons.io.IOUtils;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Socket;
 
-import benchmark.java.JavaTestContents;
-import benchmark.javascript.JavaScriptTestContents;
-import benchmark.python.PythonTestContents;
 import benchmark.util.Waiter;
+import monto.service.message.Language;
+import monto.service.message.Languages;
+import monto.service.message.LongKey;
+import monto.service.message.Selection;
+import monto.service.message.Source;
 import monto.service.message.VersionMessage;
 
 public class Benchmark {
@@ -24,72 +36,73 @@ public class Benchmark {
 		String pubAddress = "tcp://*:5000";
 		String subAddress = "tcp://*:5001";
 		
+
 		
-		
-		////////////////
-		// Basic Config
-		long waitTime = 3000;
-		int numberOfRepetitions = 100;
-		boolean doesPrint = false;
-		////////////////		
-		
-		
-		
-		String basePath = System.getProperty("user.dir");
-		String pythonPathExtension = "/services/services-python.jar";
-		String javaPathExtension = "/services/services-java.jar";
-		String javascriptPathExtension = "/services/services-javascript.jar";
-		
-		
-		initializeSockets(pubAddress, subAddress);
-		
-		/////////////////////////////////		
-		
-		List<VersionMessage> testMessages = new ArrayList<VersionMessage>();
-		testMessages.add(PythonTestContents.TESTMESSAGE_LINES10);
-		testMessages.add(PythonTestContents.TESTMESSAGE_LINES100);
-		testMessages.add(PythonTestContents.TESTMESSAGE_LINES1000);
-		
-		Services pythonServices = new Services(basePath + pythonPathExtension, doesPrint);
-		
-		
-		benchmark.ServiceIdNames pythonServiceNames = new benchmark.ServiceIdNames("pythonTokenizer", "pythonParser", "pythonOutliner", "pythonCodeCompletion");
-		List<List<String>> validServiceCombinations = pythonServiceNames.getAllValidServiceCombinations();
-		
-		TestEnvironment pythonBench = new TestEnvironment(testMessages, validServiceCombinations, numberOfRepetitions, waitTime, pythonServices, publisherSocket, subscriberSocket, pythonServiceNames);
-		pythonBench.performTests();
-		
-		/////////////////////////////////
-//		
-		List<VersionMessage> javaTestMessages = new ArrayList<VersionMessage>();
-		javaTestMessages.add(JavaTestContents.TESTMESSAGE_LINES10);
-		javaTestMessages.add(JavaTestContents.TESTMESSAGE_LINES100);
-		javaTestMessages.add(JavaTestContents.TESTMESSAGE_LINES1000);
-		
-		ServiceIdNames javaServiceNames = new ServiceIdNames("javaTokenizer", "javaParser", "javaOutliner", "javaCodeCompletioner");
-		List<List<String>> validJavaServiceCombinations = javaServiceNames.getAllValidServiceCombinations();
-		
-		
-		Services javaServices = new Services(basePath + javaPathExtension, doesPrint);
-		
-		TestEnvironment javaBench = new TestEnvironment(javaTestMessages, validJavaServiceCombinations, numberOfRepetitions, waitTime, javaServices, publisherSocket, subscriberSocket, javaServiceNames);
-		javaBench.performTests();
-		/////////////////////////////////
-		
-		List<VersionMessage> javaScriptTestMessages = new ArrayList<VersionMessage>();
-		javaScriptTestMessages.add(JavaScriptTestContents.TESTMESSAGE_LINES10);
-		javaScriptTestMessages.add(JavaScriptTestContents.TESTMESSAGE_LINES100);
-		javaScriptTestMessages.add(JavaScriptTestContents.TESTMESSAGE_LINES1000);
-		
-		ServiceIdNames javascriptServiceNames = new ServiceIdNames("javascriptTokenizer", "javascriptParser", "javascriptOutliner", "javascriptCompletioner");
-		List<List<String>> valiJavaScriptServiceCombinations = javascriptServiceNames.getAllValidServiceCombinations();
-		
-		Services javaScriptServices = new Services(basePath + javascriptPathExtension, doesPrint);
-		
-		TestEnvironment javascriptBench = new TestEnvironment(javaScriptTestMessages, valiJavaScriptServiceCombinations, numberOfRepetitions, waitTime, javaScriptServices, publisherSocket, subscriberSocket, javascriptServiceNames);
-		javascriptBench.performTests();
-		
-		////////////////////////////////
+		Parameters params = new Parameters();
+		FileBasedConfigurationBuilder<XMLConfiguration> builder =
+		    new FileBasedConfigurationBuilder<XMLConfiguration>(XMLConfiguration.class)
+		    .configure(params.xml()
+		        .setFileName("config.xml")
+		        .setValidating(false));
+
+		try{
+			XMLConfiguration config = builder.getConfiguration();
+			int timeout = config.getInt("timeout");
+			int waitTime = config.getInt("waitTime");
+			int repetitions = config.getInt("repetitions");
+			boolean doesPrint = config.getBoolean("doesPrint");
+			
+			initializeSockets(pubAddress, subAddress, timeout);
+			
+			String serviceName = null;
+			int i = 0;
+			String currentServicePrefix = "services.service(0)";
+			while((serviceName = config.getString(currentServicePrefix + ".name")) != null){
+				String servicePath = config.getString(currentServicePrefix + ".path");
+				
+				List<VersionMessage> testMessages = new ArrayList<VersionMessage>();
+				
+				String messageName = null;
+				int j = 0;
+				String currentMessagePrefix = "messages.message(0)";
+				String combinedPrefix = currentServicePrefix + "." + currentMessagePrefix;
+				while ((messageName = config.getString(combinedPrefix+ ".name")) != null){
+					String messagePath = config.getString(combinedPrefix + ".path");
+					int selectionOffset = config.getInt(combinedPrefix + ".selection.startOffset");
+					int selectionLength = config.getInt(combinedPrefix + ".selection.length");
+					Selection selection = new Selection(selectionOffset, selectionLength);
+					
+					FileInputStream inputStream = new FileInputStream(messagePath);
+					try {
+					    String content = IOUtils.toString(inputStream);
+					    testMessages.add(constructVersionMessage(serviceName, messageName, content, selection));
+					} finally {
+						inputStream.close();
+					}
+					
+					j++;
+					currentMessagePrefix = "messages.message(" + j + ")";
+					combinedPrefix = currentServicePrefix + "." + currentMessagePrefix;
+				}
+				
+				Services services = new Services(servicePath, doesPrint);
+				ServiceIdNames serviceIdNames = getServiceIdNames(serviceName);
+				List<List<String>> validServiceCombinations = serviceIdNames.getAllValidServiceCombinations();
+				
+				TestEnvironment environment = new TestEnvironment(testMessages, validServiceCombinations, repetitions, waitTime, services, publisherSocket, subscriberSocket, serviceIdNames);
+				environment.performTests();
+				i++;
+				currentServicePrefix = "services.service(" + i + ")";
+			}
+		} catch(ConfigurationException cex){
+			cex.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
 		System.out.println("Benchmark execution finished.");
 		closeSockets();
@@ -98,8 +111,30 @@ public class Benchmark {
 
 	}
 	
+	private static VersionMessage constructVersionMessage(String languageName, String messageName, String content, Selection selection) throws ParseException{
+		return new VersionMessage(new LongKey(0L), new Source(messageName), getLanguage(languageName), content, new ArrayList<Selection>(Arrays.asList(selection)));
+	}
+	
+	private static Language getLanguage(String languageName) throws ParseException{
+		switch(languageName){
+		case "python": return Languages.PYTHON;
+		case "java": return Languages.JAVA;
+		case "javascript": return Languages.JAVASCRIPT;
+		default: throw new ParseException("No Language found with name = " + languageName);
+		}
+	}
+	
+	private static ServiceIdNames getServiceIdNames(String languageName) throws ParseException{
+		switch(languageName){
+		case "python": return new benchmark.ServiceIdNames("pythonTokenizer", "pythonParser", "pythonOutliner", "pythonCodeCompletion");
+		case "java": return new ServiceIdNames("javaTokenizer", "javaParser", "javaOutliner", "javaCodeCompletioner");
+		case "javascript": return new ServiceIdNames("javascriptTokenizer", "javascriptParser", "javascriptOutliner", "javascriptCompletioner");
+		default: throw new ParseException("No Language found with name = " + languageName);
+		}
+	}
+	
 
-	private static void initializeSockets(String pubAddress, String subAddress
+	private static void initializeSockets(String pubAddress, String subAddress, int timeout
 			){
 		@SuppressWarnings("resource")
 		ZContext context = new ZContext(1);
@@ -110,6 +145,7 @@ public class Benchmark {
 		subscriberSocket = context.createSocket(ZMQ.SUB);
 		subscriberSocket.connect(subAddress);
 		subscriberSocket.subscribe(new byte[] {});
+		subscriberSocket.setReceiveTimeOut(timeout);
 		
 		Waiter.wait1Sec();
 	}
@@ -118,5 +154,5 @@ public class Benchmark {
 		publisherSocket.close();
 		subscriberSocket.close();
 	}
-
+	
 }

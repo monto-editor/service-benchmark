@@ -192,7 +192,7 @@ public abstract class MontoService {
         						configSocket,
         						ConfigurationMessages::decode,
         						message -> onConfigurationMessage(message));
-        			}
+        			}s
         		};
         	};
         	configThread.start();

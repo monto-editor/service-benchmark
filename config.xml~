@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<benchmark>
+  <timeout>2000</timeout>
+  <repetitions>2</repetitions>
+  <waitTime>2000</waitTime>
+  <doesPrint>false</doesPrint>
+  <services>
+    <service>
+      <name>javascript</name>
+      <path>/home/stefan/workspace/benchmark/services/services-javascript.jar</path>
+      <messages>
+        <message>
+          <name>10lines</name>
+          <path>/home/stefan/workspace/benchmark/testVersionMessages/javascript-10lines.js</path>
+          <selection>
+            <startOffset>369</startOffset>
+            <length>0</length>
+          </selection>
+        </message>
+      </messages>
+    </service>
+  </services>
+</benchmark>

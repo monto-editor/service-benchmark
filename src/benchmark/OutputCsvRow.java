@@ -9,7 +9,7 @@ public class OutputCsvRow {
 	private Long tokenizerDelay;
 	private Long parserDelay;
 	private Long outlinerDelay;
-	private Long codeCompletionDelay;
+	private Long codeCompletionerDelay;
 	
 	public OutputCsvRow(){
 		super();
@@ -23,7 +23,7 @@ public class OutputCsvRow {
 		this.tokenizerDelay = tokenizerDelay;
 		this.parserDelay = parserDelay;
 		this.outlinerDelay = outlinerDelay;
-		this.codeCompletionDelay = codeCompletionDelay;
+		this.codeCompletionerDelay = codeCompletionDelay;
 	}
 
 
@@ -46,26 +46,26 @@ public class OutputCsvRow {
 	public Long getTokenizerDelay() {
 		return tokenizerDelay;
 	}
-	public void setTokenizerDelay(long tokenizerDelay) {
+	public void setTokenizerDelay(Long tokenizerDelay) {
 		this.tokenizerDelay = tokenizerDelay;
 	}
 	public Long getParserDelay() {
 		return parserDelay;
 	}
-	public void setParserDelay(long parserDelay) {
+	public void setParserDelay(Long parserDelay) {
 		this.parserDelay = parserDelay;
 	}
 	public Long getOutlinerDelay() {
 		return outlinerDelay;
 	}
-	public void setOutlinerDelay(long outlinerDelay) {
+	public void setOutlinerDelay(Long outlinerDelay) {
 		this.outlinerDelay = outlinerDelay;
 	}
-	public Long getCodeCompletionDelay() {
-		return codeCompletionDelay;
+	public Long getCodeCompletionerDelay() {
+		return codeCompletionerDelay;
 	}
-	public void setCodeCompletionDelay(long codeCompletionDelay) {
-		this.codeCompletionDelay = codeCompletionDelay;
+	public void setCodeCompletionerDelay(Long codeCompletionDelay) {
+		this.codeCompletionerDelay = codeCompletionDelay;
 	}
 	
 	
