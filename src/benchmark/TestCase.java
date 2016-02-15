@@ -10,15 +10,8 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Socket;
 
 import benchmark.util.Waiter;
-import monto.service.message.Languages;
-import monto.service.message.LongKey;
-import monto.service.message.ParseException;
-import monto.service.message.ProductMessageWithContents;
-import monto.service.message.ProductMessages;
-import monto.service.message.Selection;
-import monto.service.message.Source;
-import monto.service.message.VersionMessage;
-import monto.service.message.VersionMessages;
+import monto.service.version.VersionMessage;
+import monto.service.version.VersionMessages;
 
 public class TestCase {
 

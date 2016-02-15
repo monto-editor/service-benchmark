@@ -7,7 +7,7 @@ import org.zeromq.ZMQ.Socket;
 
 import benchmark.util.BenchmarkUtils;
 import benchmark.util.Waiter;
-import monto.service.message.VersionMessage;
+import monto.service.version.VersionMessage;
 
 public class TestMode {
 	

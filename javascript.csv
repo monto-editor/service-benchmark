@@ -1,55 +1,55 @@
 Id,Mode,TestSource,TokenizerDelay,ParserDelay,OutlinerDelay,CodeCompletionerDelay
-0,-t -p -o -c ,10lines,79,123,164,timedout
-1,-t -p -o -c ,10lines,21,20,20,timedout
-2,-t -p -o -c ,100lines,103,141,154,377
-3,-t -p -o -c ,100lines,32,69,81,78
-4,-t -p -o -c ,1000lines,386,555,614,timedout
-5,-t -p -o -c ,1000lines,258,297,338,timedout
-6,-t -p -c ,10lines,79,102, ,timedout
-7,-t -p -c ,10lines,21,21, ,timedout
-8,-t -p -c ,100lines,135,183, ,196
-9,-t -p -c ,100lines,75,75, ,89
-10,-t -p -c ,1000lines,426,653, ,timedout
-11,-t -p -c ,1000lines,380,435, ,timedout
-12,-t -p -o ,10lines,52,82,94, 
-13,-t -p -o ,10lines,24,25,27, 
-14,-t -p -o ,100lines,145,214,220, 
-15,-t -p -o ,100lines,100,108,116, 
-16,-t -p -o ,1000lines,367,605,640, 
-17,-t -p -o ,1000lines,283,308,339, 
-18,-p -o -c ,10lines, ,101,120,timedout
-19,-p -o -c ,10lines, ,14,16,timedout
-20,-p -o -c ,100lines, ,147,162,170
-21,-p -o -c ,100lines, ,64,75,72
-22,-p -o -c ,1000lines, ,549,618,timedout
-23,-p -o -c ,1000lines, ,326,381,timedout
-24,-p -c ,10lines, ,78, ,timedout
-25,-p -c ,10lines, ,11, ,timedout
-26,-p -c ,100lines, ,136, ,152
-27,-p -c ,100lines, ,47, ,52
-28,-p -c ,1000lines, ,712, ,timedout
-29,-p -c ,1000lines, ,299, ,timedout
-30,-p -o ,10lines, ,99,114, 
-31,-p -o ,10lines, ,23,26, 
-32,-p -o ,100lines, ,117,125, 
-33,-p -o ,100lines, ,79,85, 
-34,-p -o ,1000lines, ,541,588, 
-35,-p -o ,1000lines, ,303,334, 
-36,-t -p ,10lines,46,99, , 
-37,-t -p ,10lines,25,20, , 
-38,-t -p ,100lines,204,181, , 
-39,-t -p ,100lines,94,106, , 
-40,-t -p ,1000lines,366,663, , 
-41,-t -p ,1000lines,321,391, , 
-42,-p ,10lines, ,77, , 
-43,-p ,10lines, ,19, , 
-44,-p ,100lines, ,112, , 
-45,-p ,100lines, ,69, , 
-46,-p ,1000lines, ,541, , 
-47,-p ,1000lines, ,284, , 
-48,-t ,10lines,57, , , 
-49,-t ,10lines,16, , , 
-50,-t ,100lines,118, , , 
-51,-t ,100lines,46, , , 
-52,-t ,1000lines,282, , , 
-53,-t ,1000lines,236, , , 
+0,-t -p -o -c ,10lines,timedout,timedout,timedout,timedout
+1,-t -p -o -c ,10lines,30073,timedout,timedout,timedout
+2,-t -p -o -c ,100lines,0,0,0,0
+3,-t -p -o -c ,100lines,0,0,0,0
+4,-t -p -o -c ,1000lines,0,0,0,0
+5,-t -p -o -c ,1000lines,1,0,0,0
+6,-t -p -c ,10lines,timedout,0,0,0
+7,-t -p -c ,10lines,0,0,0,timedout
+8,-t -p -c ,100lines,timedout,timedout, ,0
+9,-t -p -c ,100lines,timedout,timedout, ,timedout
+10,-t -p -c ,1000lines,timedout,timedout, ,timedout
+11,-t -p -c ,1000lines,timedout,timedout, ,timedout
+12,-t -p -o ,10lines,timedout,timedout,timedout, 
+13,-t -p -o ,10lines,timedout,timedout,timedout, 
+14,-t -p -o ,100lines,timedout,timedout,timedout, 
+15,-t -p -o ,100lines,timedout,timedout,timedout, 
+16,-t -p -o ,1000lines,timedout,timedout,timedout, 
+17,-t -p -o ,1000lines,timedout,timedout,timedout, 
+18,-p -o -c ,10lines,0,0,timedout,timedout
+19,-p -o -c ,10lines, ,0,0,timedout
+20,-p -o -c ,100lines,0,0,timedout,timedout
+21,-p -o -c ,100lines, ,0,0,timedout
+22,-p -o -c ,1000lines,0,0,timedout,timedout
+23,-p -o -c ,1000lines, ,0,1,timedout
+24,-p -c ,10lines, ,timedout, ,timedout
+25,-p -c ,10lines, ,timedout, ,timedout
+26,-p -c ,100lines, ,timedout, ,timedout
+27,-p -c ,100lines, ,timedout, ,timedout
+28,-p -c ,1000lines, ,timedout, ,timedout
+29,-p -c ,1000lines, ,timedout, ,timedout
+30,-p -o ,10lines, ,timedout,timedout, 
+31,-p -o ,10lines, ,timedout,timedout, 
+32,-p -o ,100lines, ,timedout,timedout, 
+33,-p -o ,100lines, ,timedout,timedout, 
+34,-p -o ,1000lines, ,timedout,timedout, 
+35,-p -o ,1000lines, ,timedout,timedout, 
+36,-t -p ,10lines,timedout,timedout, , 
+37,-t -p ,10lines,timedout,timedout, , 
+38,-t -p ,100lines,timedout,timedout, , 
+39,-t -p ,100lines,timedout,timedout, , 
+40,-t -p ,1000lines,timedout,timedout, , 
+41,-t -p ,1000lines,timedout,timedout, , 
+42,-p ,10lines, ,timedout, , 
+43,-p ,10lines, ,timedout, , 
+44,-p ,100lines, ,timedout, , 
+45,-p ,100lines, ,timedout, , 
+46,-p ,1000lines, ,timedout, , 
+47,-p ,1000lines, ,timedout, , 
+48,-t ,10lines,timedout, , , 
+49,-t ,10lines,timedout, , , 
+50,-t ,100lines,timedout, , , 
+51,-t ,100lines,timedout, , , 
+52,-t ,1000lines,timedout, , , 
+53,-t ,1000lines,timedout, , , 

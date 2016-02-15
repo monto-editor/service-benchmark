@@ -18,12 +18,12 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Socket;
 
 import benchmark.util.Waiter;
-import monto.service.message.Language;
-import monto.service.message.Languages;
-import monto.service.message.LongKey;
-import monto.service.message.Selection;
-import monto.service.message.Source;
-import monto.service.message.VersionMessage;
+import monto.service.types.Language;
+import monto.service.types.Languages;
+import monto.service.types.LongKey;
+import monto.service.types.Selection;
+import monto.service.types.Source;
+import monto.service.version.VersionMessage;
 
 public class Benchmark {
 	
