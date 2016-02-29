@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <benchmark>
-  <timeout>5000</timeout>
-  <repetitions>2</repetitions>
-  <waitTime>2000</waitTime>
-  <doesPrint>false</doesPrint>
+  <timeout>1000</timeout>
+  <repetitions>100</repetitions>
+  <waitTime>1000</waitTime>
+  <doesPrint>true</doesPrint>
   <services>
     <service>
       <name>python</name>
-      <path>/home/stefan/workspace/benchmark/services/services-python.jar</path>
+      <path>/Users/svenkeidel/Documents/monto/service-benchmark/services/services-python.jar</path>
       <messages>
         <message>
           <name>10lines</name>
-          <path>/home/stefan/workspace/benchmark/testVersionMessages/python-10lines.py</path>
+          <path>/Users/svenkeidel/Documents/monto/service-benchmark/testVersionMessages/python-10lines.py</path>
           <selection>
             <startOffset>2</startOffset>
             <length>1</length>
@@ -19,7 +19,7 @@
         </message>
         <message>
           <name>100lines</name>
-          <path>/home/stefan/workspace/benchmark/testVersionMessages/python-100lines.py</path>
+          <path>/Users/svenkeidel/Documents/monto/service-benchmark/testVersionMessages/python-100lines.py</path>
           <selection>
             <startOffset>139</startOffset>
             <length>0</length>
@@ -27,7 +27,7 @@
         </message>
         <message>
           <name>1000lines</name>
-          <path>/home/stefan/workspace/benchmark/testVersionMessages/python-1000lines.py</path>
+          <path>/Users/svenkeidel/Documents/monto/service-benchmark/testVersionMessages/python-1000lines.py</path>
           <selection>
             <startOffset>929</startOffset>
             <length>0</length>
@@ -37,11 +37,11 @@
     </service>
     <service>
       <name>java</name>
-      <path>/home/stefan/workspace/benchmark/services/services-java.jar</path>
+      <path>/Users/svenkeidel/Documents/monto/service-benchmark/services/services-java.jar</path>
       <messages>
         <message>
           <name>10lines</name>
-          <path>/home/stefan/workspace/benchmark/testVersionMessages/java-10lines.java</path>
+          <path>/Users/svenkeidel/Documents/monto/service-benchmark/testVersionMessages/java-10lines.java</path>
           <selection>
             <startOffset>2</startOffset>
             <length>1</length>
@@ -49,7 +49,7 @@
         </message>
         <message>
           <name>100lines</name>
-          <path>/home/stefan/workspace/benchmark/testVersionMessages/java-100lines.java</path>
+          <path>/Users/svenkeidel/Documents/monto/service-benchmark/testVersionMessages/java-100lines.java</path>
           <selection>
             <startOffset>3110</startOffset>
             <length>0</length>
@@ -57,7 +57,7 @@
         </message>
         <message>
           <name>1000lines</name>
-          <path>/home/stefan/workspace/benchmark/testVersionMessages/java-1000lines.java</path>
+          <path>/Users/svenkeidel/Documents/monto/service-benchmark/testVersionMessages/java-1000lines.java</path>
           <selection>
             <startOffset>7216</startOffset>
             <length>0</length>
@@ -67,11 +67,11 @@
     </service>
     <service>
       <name>javascript</name>
-      <path>/home/stefan/workspace/benchmark/services/services-javascript.jar</path>
+      <path>/Users/svenkeidel/Documents/monto/service-benchmark/services/services-javascript.jar</path>
       <messages>
         <message>
           <name>10lines</name>
-          <path>/home/stefan/workspace/benchmark/testVersionMessages/javascript-10lines.js</path>
+          <path>/Users/svenkeidel/Documents/monto/service-benchmark/testVersionMessages/javascript-10lines.js</path>
           <selection>
             <startOffset>269</startOffset>
             <length>0</length>
@@ -79,7 +79,7 @@
         </message>
         <message>
           <name>100lines</name>
-          <path>/home/stefan/workspace/benchmark/testVersionMessages/javascript-100lines.js</path>
+          <path>/Users/svenkeidel/Documents/monto/service-benchmark/testVersionMessages/javascript-100lines.js</path>
           <selection>
             <startOffset>3379</startOffset>
             <length>0</length>
@@ -87,7 +87,7 @@
         </message>
         <message>
           <name>1000lines</name>
-          <path>/home/stefan/workspace/benchmark/testVersionMessages/javascript-1000lines.js</path>
+          <path>/Users/svenkeidel/Documents/monto/service-benchmark/testVersionMessages/javascript-1000lines.js</path>
           <selection>
             <startOffset>7145</startOffset>
             <length>0</length>

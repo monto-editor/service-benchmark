@@ -8,14 +8,14 @@ import org.zeromq.ZMQ.Socket;
 
 import benchmark.util.BenchmarkUtils;
 import benchmark.util.CsvFileWriter;
-import monto.service.product.IProductMessage;
+import monto.service.product.ProductMessage;
 import monto.service.product.ProductMessages;
+import monto.service.source.SourceMessage;
 import monto.service.types.ParseException;
-import monto.service.version.VersionMessage;
 
 public class TestEnvironment {
 	
-	protected List<VersionMessage> testMessages;
+	protected List<SourceMessage> testMessages;
 	protected List<List<String>> validModi;
 	protected int numberOfRepetitions;
 	protected long waitTimeInMs;
@@ -24,7 +24,7 @@ public class TestEnvironment {
 	protected Socket subscriberSocket;
 	private benchmark.ServiceIdNames serviceNames;
 	
-	public TestEnvironment(List<VersionMessage> testMessages, List<List<String>> validModi,
+	public TestEnvironment(List<SourceMessage> testMessages, List<List<String>> validModi,
 			int numberOfRepetitions, long waitTimeInMs, Services services, Socket publisherSocket,
 			Socket subscriberSocket, benchmark.ServiceIdNames serviceNames) {
 		super();
@@ -95,7 +95,7 @@ public class TestEnvironment {
 			String prdMessageAsJSON = prdMessages.get(i);
 			long serviceReceivedTime = serviceDelays.get(i);
 			
-			IProductMessage prdMsg = null;
+			ProductMessage prdMsg = null;
 			try {
 				if(prdMessageAsJSON == null){
 					continue;

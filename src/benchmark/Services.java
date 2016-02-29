@@ -5,7 +5,7 @@ import java.io.IOException;
 public class Services {
 	
 	private Process services = null;
-	private final String fixedStartArguments = "-address tcp://* -registration tcp://*:5004 -configuration tcp://*:5007";;
+	private final String fixedStartArguments = "-address tcp://* -registration tcp://*:5004 -configuration tcp://*:5007 -resources 8000";;
 	private String absolutePath;
 	private StreamGobbler errorGobbler;
 	private StreamGobbler outputGobbler;

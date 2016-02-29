@@ -1,28 +1,24 @@
 package benchmark;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
-import org.zeromq.ZContext;
-import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Socket;
 
 import benchmark.util.Waiter;
-import monto.service.version.VersionMessage;
-import monto.service.version.VersionMessages;
+import monto.service.source.SourceMessage;
+import monto.service.source.SourceMessages;
 
 public class TestCase {
 
 	
 	private Socket publisherSocket;
 	private Socket subscriberSocket;
-	private VersionMessage testMessage;
+	private SourceMessage testMessage;
 	private List<String> activeServices;
 	private long waitTime;
 	
-	public TestCase(Socket publisherSocket, Socket subscriberSocket, VersionMessage testMessage, List<String> activeServices, long waitTime){
+	public TestCase(Socket publisherSocket, Socket subscriberSocket, SourceMessage testMessage, List<String> activeServices, long waitTime){
 		
 		this.publisherSocket = publisherSocket;
 		this.subscriberSocket = subscriberSocket;
@@ -64,7 +60,7 @@ public class TestCase {
 		for(int i=0;i<numberOfRepetitions;i++){
 			System.out.println("performTests iteration: " + i);
 			
-			String testMsgAsJSON = VersionMessages.encode(testMessage).toJSONString();
+			String testMsgAsJSON = SourceMessages.encode(testMessage).toJSONString();
 			testRecords.add(performTest(testMsgAsJSON));
 		}
 		

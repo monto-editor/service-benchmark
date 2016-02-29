@@ -18,12 +18,12 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Socket;
 
 import benchmark.util.Waiter;
+import monto.service.source.SourceMessage;
 import monto.service.types.Language;
 import monto.service.types.Languages;
 import monto.service.types.LongKey;
 import monto.service.types.Selection;
 import monto.service.types.Source;
-import monto.service.version.VersionMessage;
 
 public class Benchmark {
 	
@@ -60,10 +60,10 @@ public class Benchmark {
 			while((serviceName = config.getString(currentServicePrefix + ".name")) != null){
 				String servicePath = config.getString(currentServicePrefix + ".path");
 				
-				List<VersionMessage> testMessages = new ArrayList<VersionMessage>();
+				List<SourceMessage> testMessages = new ArrayList<SourceMessage>();
 				
 				String messageName = null;
-				int j = 0;
+				long j = 0;
 				String currentMessagePrefix = "messages.message(0)";
 				String combinedPrefix = currentServicePrefix + "." + currentMessagePrefix;
 				while ((messageName = config.getString(combinedPrefix+ ".name")) != null){
@@ -75,7 +75,7 @@ public class Benchmark {
 					FileInputStream inputStream = new FileInputStream(messagePath);
 					try {
 					    String content = IOUtils.toString(inputStream);
-					    testMessages.add(constructVersionMessage(serviceName, messageName, content, selection));
+					    testMessages.add(constructVersionMessage(new LongKey(j),serviceName, messageName, content, selection));
 					} finally {
 						inputStream.close();
 					}
@@ -111,8 +111,8 @@ public class Benchmark {
 
 	}
 	
-	private static VersionMessage constructVersionMessage(String languageName, String messageName, String content, Selection selection) throws ParseException{
-		return new VersionMessage(new LongKey(0L), new Source(messageName), getLanguage(languageName), content, new ArrayList<Selection>(Arrays.asList(selection)));
+	private static SourceMessage constructVersionMessage(LongKey key, String languageName, String messageName, String content, Selection selection) throws ParseException{
+		return new SourceMessage(key, new Source(messageName), getLanguage(languageName), content, new ArrayList<Selection>(Arrays.asList(selection)));
 	}
 	
 	private static Language getLanguage(String languageName) throws ParseException{

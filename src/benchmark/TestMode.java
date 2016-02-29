@@ -7,11 +7,11 @@ import org.zeromq.ZMQ.Socket;
 
 import benchmark.util.BenchmarkUtils;
 import benchmark.util.Waiter;
-import monto.service.version.VersionMessage;
+import monto.service.source.SourceMessage;
 
 public class TestMode {
 	
-	private List<VersionMessage> testMessages;
+	private List<SourceMessage> testMessages;
 	private List<String> servicesToBeEnabled;
 	private Socket publisherSocket;
 	private Socket subscriberSocket;
@@ -22,7 +22,7 @@ public class TestMode {
 	
 
 	
-	public TestMode(List<VersionMessage> testMessages, List<String> servicesToBeEnabled,
+	public TestMode(List<SourceMessage> testMessages, List<String> servicesToBeEnabled,
 			Socket publisherSocket, Socket subscriberSocket, Services services, int numberOfRepetitions, long waitTime, String acronym) {
 		super();
 		this.testMessages = testMessages;
@@ -41,10 +41,8 @@ public class TestMode {
 		
 		setupServices(acronym);
 		
-		int numberOfActiveServices = servicesToBeEnabled.size();
-		
 		List<TestCaseResult> result = new ArrayList<>();
-		for (VersionMessage testMessage : testMessages){
+		for (SourceMessage testMessage : testMessages){
 			TestCase test = new TestCase(publisherSocket, subscriberSocket, testMessage, servicesToBeEnabled, waitTime);
 			List<RecordedTimes> recordedTimes = test.performTests(numberOfRepetitions);
 			
